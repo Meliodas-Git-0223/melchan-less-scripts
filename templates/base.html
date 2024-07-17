@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="header">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li class="username">{% block username %}{% endblock %}</li>
+            <li> <a href="/threads">Threads</a> </li>
+            {% if current_user.name %}
+                <li><a href="/logout">Log out</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="main">
+        {% block main %}{% endblock %}
+    </div>
+
+    <div class="footer">
+        <p>Barnaul 2024</p>
+        <p>&copy Copyright Talisman Mel</p>
+        <p>За всё написанное посетителями сайта, создатель ответственности не несёт.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+mkdir data && mkdir data/threads && mkdir static/media && echo '{"admins":[]}' >> data/admins.json &&  echo '{"users": []}' >> data/users.json

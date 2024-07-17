@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Threads{% endblock %}
+
+{% block username %}<a href="/user/{{username}}">{{username}}</a>{% endblock %}
+
+{% block main %}
+
+<div class="threadbl">
+    <a href="threads/create" >Создать тему</a>
+</div>
+
+{% for thread in threadnames %}
+    <div class="threadbl">
+        <a href="/threadadmin/{{thread}}">{{thread}}</a>
+        <a href="/delete/thread/{{thread}}">Remove</a>
+    </div>
+{% endfor %}
+
+{% endblock %}

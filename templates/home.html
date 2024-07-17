@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+
+{% block username %}
+
+{% if username != 'login'  %}
+    <a href="/{{username}}">{{username}}</a>
+{% else %}
+    <a href="/login">login</a>
+{%endif%}
+
+{% endblock %}
+
+{% block main %}
+
+<div class="main">
+    <h1>Добро пожаловать!</h1>
+    <h2>Вот случайная тема на форуме:</h2>
+    <div class="randomthread">
+        {% if rantr != None %}
+            <a href="/thread/{{rantr}}">{{rantr}}</a>
+        {% else %}
+            <p>Сервер пуст</p>
+        {%endif%}
+    </div>
+</div>
+
+{% endblock %}

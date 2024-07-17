@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+
+{% block username %} <a href="/{{username}}">{{username}}</a> {% endblock %}
+
+{% block main %}
+
+<div class="create">
+    <input type="text" name="thrname" placeholder="Название темы" class="thrname">
+    <button onclick="create();">Создать</button>
+</div>
+
+<script>
+    let isExecuted = false;
+    function redirect(threadname){
+        location.replace('/thread/'+threadname)
+    }
+
+    function create(){
+        let name = document.querySelector('.username').textContent;
+        let threadname = document.querySelector(".thrname").value;
+        const url = '/newthread';
+        const xhr = new XMLHttpRequest();
+        const formData = new FormData();
+        formData.append('name', name)
+        formData.append('thrname', threadname);
+        xhr.open('POST', url, true);
+        xhr.send(formData);
+        if (!isExecuted) {
+            setTimeout(redirect, 1000, threadname);
+            isExecuted = true; // Устанавливаем флаг, что функция уже была выполнена
+            }
+        
+    }
+
+</script>
+{% endblock %}

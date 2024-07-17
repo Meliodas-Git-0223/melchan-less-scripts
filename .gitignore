@@ -1,0 +1,4 @@
+data
+json-db
+static/media/*
+packages/__pycache__

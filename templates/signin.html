@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Sign in{% endblock %}
+
+
+{% block username %} <a href="/login">Log in</a> {% endblock %}
+
+
+{% block main %}
+
+<div class="loginform">
+    <form method="post" autocomplete="off" class="loginsignin">
+        <p class="htext">Зарегистрироваться</p>
+        <input type="text" name="name" id="" placeholder="name" class="name" oninput="check(this)">
+        <p class="namecheck"></p>
+        <input type="text" name="password" id="" placeholder="password" class="password">
+        <p> </p>
+        <input type="submit" value="Зарегистрироваться">
+        <p>Уже есть аккаунт? <a href="/login">Войти</a></p>
+    </form>
+    <input class="namesbl" type="text" value="{{tname}}" style="display: none;">
+</div>
+
+<script src="/static/signin.js"></script>
+{% endblock %}

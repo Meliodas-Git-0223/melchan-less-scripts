@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}{{thread}}{% endblock %}
+
+{% block username %}<a href="/user/{{username}}">{{username}}</a>{% endblock %}
+
+{% block main %}
+
+<a href="/threadsadmin" > <-- Назад</a>
+
+{% for message in messages %}
+    {% if current_user.name == message['name'] %}
+        <div class="messbl" style="display: block; width: 100%; min-height: 170px; background-color: rgb(1, 94, 1); padding-top: 20px; border: 1px solid black;">
+            <a href="/user/{{message['name']}}" >    {{message['name']}}</a>
+            <p class="messbltxt" style="color: white; text-decoration: none; font-size: 21px; background-color: rgb(1, 46, 1); overflow-x: scroll;">{{message['text']}}</p>
+            <p class="messbldat" style="text-align: right; background-color: rgb(1, 94, 1); margin-right: 20px;">{{message['date']}}</p>
+            {% if message['media']%}
+                {% if message['media'] == 'image' %}
+                    <img src="/static/media/{{message['media-filename']}}" alt="", width="250px" >
+                {% elif message['media'] == 'audio' %}
+                    <audio controls src="/static/media/{{message['media-filename']}}"></audio>
+                
+                {% else %}
+                <video width="250px" controls>
+                    <source src="/static/media/{{message['media-filename']}}" type="video/{{message['media-filename'].split('.')[1]}}">
+                </video>
+                {% endif %}
+            {% endif %}
+            <a href="/delete/message/{{thread}}/{{message['id']}}">Remove</a>
+        </div>
+    {% else %}
+        <div class="messbl" style="display: block; width: 100%; min-height: 170px; background-color: #333333; padding-top: 20px; border: 1px solid black;">
+            <a href="/user/{{message['name']}}" >    {{message['name']}}</a>
+            <p class="messbltxt" style="color: white; text-decoration: none; font-size: 21px; background-color: #111111; overflow-x: scroll;">{{message['text']}}</p>
+            <p class="messbldat" style="text-align: right;">{{message['date']}}</p>
+            {% if message['media']%}
+                {% if message['media'] == 'image' %}
+                    <img src="/static/media/{{message['media-filename']}}" alt="", width="250px" >
+                {% elif message['media'] == 'audio' %}
+                    <audio controls src="/static/media/{{message['media-filename']}}"></audio>
+                
+                {% else %}
+                <video width="250px" controls>
+                    <source src="/static/media/{{message['media-filename']}}" type="video/{{message['media-filename'].split('.')[1]}}">
+                </video>
+                {% endif %}
+            {% endif %}
+           <p></p> <a href="/delete/message/{{thread}}/{{message['id']}}">Remove</a></p>
+        </div>
+    {% endif %}
+{% endfor %}
+
+<div class="writemsg">
+    
+    <input type="file" name="file" id="file">
+    <input type="text" name="" placeholder="Сообщение" class="message" autocomplete="no">
+    <button type="submit" class="send" onclick="send()">отправить</button>
+    
+    
+</div>
+
+<script src="/static/imagebigger.js"></script>
+
+<script>
+    
+    
+
+
+    function send(){
+        let message = document.querySelector(".message");
+        let name = document.querySelector('.username').textContent;
+        let file = document.querySelector('#file');
+        let threadname = document.querySelector('.threadname').textContent
+        let emptyFile = document.createElement('input');
+        emptyFile.type = 'file';
+
+        const url = '/newmessage';
+        const xhr = new XMLHttpRequest();
+        const formData = new FormData();
+
+	    formData.append('message', message.value);
+        formData.append('name', name);
+        if(file.files[0] != undefined){
+            formData.append('file', file.files[0]); 
+        }
+        formData.append('tfile',(file.files[0] != undefined))
+        formData.append('threadname', threadname);
+
+	    xhr.open('POST', url, true);
+	    xhr.send(formData);
+
+        
+        message.value = '';
+        file.files = emptyFile.files;
+    }
+</script>
+
+{% endblock %}
